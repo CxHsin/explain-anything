@@ -1,0 +1,6 @@
+interface:
+  display_name: "Explain Anything"
+  short_description: "针对理解障碍，自动选择清晰文字、图解或交互演示，帮助看清关键关系与过程"
+  default_prompt: "用 $explain-anything 帮我理解这个问题，选择最合适的解释形式。"
+policy:
+  allow_implicit_invocation: true

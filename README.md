@@ -22,33 +22,13 @@
 
 ### 通过 npx 安装
 
-需要 Node.js/npm。按使用的 Agent 选择命令，安装到用户级目录，并保留安装过程中的交互确认。这些 npx 命令可用于 Windows、macOS 和 Linux。
-
-**Codex**
+需要 Node.js/npm，支持 Windows、macOS 和 Linux。以 Codex 为例：
 
 ```bash
 npx skills add https://github.com/CxHsin/explain-anything --skill explain-anything -a codex -g
 ```
 
-**Claude Code**
-
-```bash
-npx skills add https://github.com/CxHsin/explain-anything --skill explain-anything -a claude-code -g
-```
-
-**Cursor**
-
-```bash
-npx skills add https://github.com/CxHsin/explain-anything --skill explain-anything -a cursor -g
-```
-
-**OpenCode**
-
-```bash
-npx skills add https://github.com/CxHsin/explain-anything --skill explain-anything -a opencode -g
-```
-
-`--skill explain-anything` 指定技能，`-a` 指定 Agent，`-g` 表示用户级安装；去掉 `-g` 可安装到当前项目。其他 Agent 的名称与安装选项见 [skills CLI 官方说明](https://github.com/vercel-labs/skills#install-a-skill)。
+其他平台只需将 `-a codex` 中的 `codex` 替换为下表参数。`-g` 表示用户级安装，去掉则安装到当前项目；命令保留交互确认。更多选项见 [skills CLI 官方说明](https://github.com/vercel-labs/skills#install-a-skill)。
 
 | Agent | `-a` 参数 | 默认用户级目录 |
 | --- | --- | --- |

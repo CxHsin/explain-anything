@@ -18,11 +18,62 @@
 
 ## 安装与使用
 
+需要支持本地 Skills 的 Agent。选择下面一种安装方式；已有安装时，先检查并保留本地修改，避免直接覆盖。
+
+### 通过 npx 安装
+
+需要 Node.js/npm。按使用的 Agent 选择命令，安装到用户级目录，并保留安装过程中的交互确认。这些 npx 命令可用于 Windows、macOS 和 Linux。
+
+**Codex**
+
+```bash
+npx skills add https://github.com/CxHsin/explain-anything --skill explain-anything -a codex -g
+```
+
+**Claude Code**
+
+```bash
+npx skills add https://github.com/CxHsin/explain-anything --skill explain-anything -a claude-code -g
+```
+
+**Cursor**
+
+```bash
+npx skills add https://github.com/CxHsin/explain-anything --skill explain-anything -a cursor -g
+```
+
+**OpenCode**
+
+```bash
+npx skills add https://github.com/CxHsin/explain-anything --skill explain-anything -a opencode -g
+```
+
+`--skill explain-anything` 指定技能，`-a` 指定 Agent，`-g` 表示用户级安装；去掉 `-g` 可安装到当前项目。其他 Agent 的名称与安装选项见 [skills CLI 官方说明](https://github.com/vercel-labs/skills#install-a-skill)。
+
+| Agent | `-a` 参数 | 默认用户级目录 |
+| --- | --- | --- |
+| Codex | `codex` | `~/.codex/skills/` |
+| Claude Code | `claude-code` | `~/.claude/skills/` |
+| Cursor | `cursor` | `~/.cursor/skills/` |
+| OpenCode | `opencode` | `~/.config/opencode/skills/` |
+
+`~` 表示用户主目录，实际路径以安装工具和环境配置为准。各 Agent 的技能加载和显式调用方式可能不同；下面的 `$explain-anything` 示例以 Codex 为例。对话内交互演示还取决于宿主能力，安装技能本身不会增加渲染工具。
+
+### 让 Agent 安装
+
+将下面这段话复制给 Codex、Claude Code、Cursor、OpenCode 或其他具备文件操作和安装能力的 Agent，由它根据当前平台选择目录：
+
+```text
+请从 https://github.com/CxHsin/explain-anything 安装 explain-anything 技能到当前 Agent 的用户级技能目录。先检查是否已有安装；如果存在，保留本地修改，不直接覆盖。安装完整技能目录，包含 references 和 agents 文件，并确认 SKILL.md 可读取。完成后告诉我如何调用。
+```
+
+### 手动安装
+
 需要 Git，以及支持本地 Skills 的 Agent。下面将仓库安装到 Codex 的用户级技能目录；设置了 `CODEX_HOME` 时使用该目录，否则使用 `~/.codex`。
 
-已有 `explain-anything` 目录时，先检查和保留本地修改。安装命令会停止，不覆盖现有目录；已有 Git 克隆可在确认工作区干净后更新。
+下面的手动安装脚本遇到已有 `explain-anything` 目录时会停止安装，不覆盖现有目录；已有 Git 克隆可在确认工作区干净后更新。
 
-### Windows PowerShell
+#### Windows PowerShell
 
 ```powershell
 $skillHome = if ($env:CODEX_HOME) { $env:CODEX_HOME } else { Join-Path $HOME '.codex' }
@@ -32,7 +83,7 @@ New-Item -ItemType Directory -Force -Path (Split-Path -Parent $skillDir) | Out-N
 git clone https://github.com/CxHsin/explain-anything.git $skillDir
 ```
 
-### macOS / Linux
+#### macOS / Linux
 
 ```bash
 skill_dir="${CODEX_HOME:-$HOME/.codex}/skills/explain-anything"
@@ -44,7 +95,9 @@ else
 fi
 ```
 
-让 Agent 重新加载技能列表；必要时重新打开应用或会话。确认技能可见后，显式调用：
+### 使用示例
+
+安装完成后，让 Agent 重新加载技能列表；必要时重新打开应用或会话。确认技能可见后，显式调用：
 
 ```text
 $explain-anything 我懂导数，但没理解学习率为什么会影响收敛，请选择合适的形式解释。

@@ -47,34 +47,6 @@ npx skills add https://github.com/CxHsin/explain-anything --skill explain-anythi
 请从 https://github.com/CxHsin/explain-anything 安装 explain-anything 技能到当前 Agent 的用户级技能目录。先检查是否已有安装；如果存在，保留本地修改，不直接覆盖。安装完整技能目录，包含 references 和 agents 文件，并确认 SKILL.md 可读取。完成后告诉我如何调用。
 ```
 
-### 手动安装
-
-需要 Git，以及支持本地 Skills 的 Agent。下面将仓库安装到 Codex 的用户级技能目录；设置了 `CODEX_HOME` 时使用该目录，否则使用 `~/.codex`。
-
-下面的手动安装脚本遇到已有 `explain-anything` 目录时会停止安装，不覆盖现有目录；已有 Git 克隆可在确认工作区干净后更新。
-
-#### Windows PowerShell
-
-```powershell
-$skillHome = if ($env:CODEX_HOME) { $env:CODEX_HOME } else { Join-Path $HOME '.codex' }
-$skillDir = Join-Path $skillHome 'skills/explain-anything'
-if (Test-Path -LiteralPath $skillDir) { throw 'explain-anything 已存在，请先检查本地版本。' }
-New-Item -ItemType Directory -Force -Path (Split-Path -Parent $skillDir) | Out-Null
-git clone https://github.com/CxHsin/explain-anything.git $skillDir
-```
-
-#### macOS / Linux
-
-```bash
-skill_dir="${CODEX_HOME:-$HOME/.codex}/skills/explain-anything"
-if [ -e "$skill_dir" ]; then
-  echo 'explain-anything 已存在，请先检查本地版本。'
-else
-  mkdir -p "$(dirname "$skill_dir")"
-  git clone https://github.com/CxHsin/explain-anything.git "$skill_dir"
-fi
-```
-
 ### 使用示例
 
 安装完成后，让 Agent 重新加载技能列表；必要时重新打开应用或会话。确认技能可见后，显式调用：
